@@ -18,15 +18,21 @@ toolchain:
 	./scripts/toolchain.bash --setup
 
 setup_build_env:
-	#source /home/harbio/sdk2/bbb/scripts/set_env.bash
+	./scripts/set_env.bash
 
-kernel:setup_build_env
+kernel:
+	set -e; \
+	./scripts/set_env.bash; \
 	./scripts/kernel.bash --build
 
-bootloader:setup_build_env
+bootloader:
+        set -e; \
+        ./scripts/set_env.bash; \
 	./scripts/bootloader.bash --build
 
-dtb:setup_build_env
+dtb:
+        set -e; \
+        ./scripts/set_env.bash; \
 	./scripts/dtb.bash --build
 
 rootfs:
