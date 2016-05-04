@@ -26,13 +26,13 @@ kernel:
 	./scripts/kernel.bash --build
 
 bootloader:
-        set -e; \
-        ./scripts/set_env.bash; \
+	set -e; \
+	./scripts/set_env.bash; \
 	./scripts/bootloader.bash --build
 
 dtb:
-        set -e; \
-        ./scripts/set_env.bash; \
+	set -e; \
+	./scripts/set_env.bash; \
 	./scripts/dtb.bash --build
 
 rootfs:

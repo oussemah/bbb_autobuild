@@ -30,13 +30,9 @@ format_sd_card() {
 
 	#make sure that the SD card isn't mounted before we start
 	if [ -b ${DRIVE}1 ]; then
-		umount ${DRIVE}1
-		umount ${DRIVE}2
-		umount ${DRIVE}3
+		umount ${DRIVE}*
 	elif [ -b ${DRIVE}p1 ]; then
-		umount ${DRIVE}p1
-		umount ${DRIVE}p2
-		umount ${DRIVE}p3
+		umount ${DRIVE}p*
 	else
 		umount ${DRIVE}
 	fi
@@ -89,7 +85,7 @@ copy_uboot() {
 		exit 1
 	fi
 
-        SRCDIR = ./images/
+    SRCDIR=./images/
 
 	if [ ! -f ${SRCDIR}/MLO ]; then
 		echo -e "File not found: ${SRCDIR}/MLO\n"
@@ -142,7 +138,7 @@ copy_rootfs() {
 		exit 1
 	fi
 
-        SRCDIR = ./images/
+    SRCDIR=./images/
 
 	if [ ! -f "${SRCDIR}/rootfs.tar.xz" ]; then
 			echo "File not found: ${SRCDIR}/rootfs.tar.xz"
@@ -177,6 +173,8 @@ copy_rootfs() {
 			echo "Writing wpa_supplicant.conf to /media/card/etc/"
 			sudo cp ${SRCDIR}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
 		fi
+        
+        sudo cp -Rva ${SRCDIR}/modules/lib/* /media/card/lib/
 
 		echo "Unmounting $DEV"
 		sudo umount $DEV
@@ -270,13 +268,9 @@ fi
 #Unmount everything (A second hand check for security)
 echo "Unmounting sd card"
 if [ -b ${drive}1 ]; then
-	umount ${drive}1
-	umount ${drive}2
-	umount ${drive}3
+	umount ${drive}*
 elif [ -b ${drive}p1 ]; then
-	umount ${drive}p1
-	umount ${drive}p2
-	umount ${drive}p3
+	umount ${drive}p*
 else
 	umount ${drive}
 fi
