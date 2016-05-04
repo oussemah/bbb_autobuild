@@ -1,4 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+#
+# (c) Copyright 2016 Oussema Harbi <oussema.elharbi@gmail.com>
+# Licensed under terms of GPLv2
+#
+#
 
 START_DIR=$PWD
 
@@ -15,5 +20,10 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- uImage LOADADDR=0x80008000 -j4
 #Move result to image folder
 mkdir -p $START_DIR/images
 cp -a arch/arm/boot/uImage $START_DIR/images/
+
+if [ $# != "0" ] || [ $1 != "--no-modules" ]; then
+    make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules -j4
+    make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=images/modules modules_install
+fi
 
 cd $START_DIR

@@ -1,9 +1,14 @@
-#!/bin/sh
+#!/bin/bash
+#
+# (c) Copyright 2016 Oussema Harbi <oussema.elharbi@gmail.com>
+# Licensed under terms of GPLv2
+#
+#
 START_DIR=$PWD
 
 #define Paths and URLs used
-TC_URL_BASE=http://releases.linaro.org/14.04/components/toolchain/binaries/
-TC_FILE=gcc-linaro-arm-linux-gnueabihf-4.8-2014.04_linux.tar.xz
+TC_URL_BASE=http://releases.linaro.org/15.06/components/toolchain/binaries/4.8/arm-linux-gnueabihf/
+TC_FILE=gcc-linaro-4.8-2015.06-x86_64_arm-linux-gnueabihf.tar.xz
 
 TC_SRC=$PWD/toolchain
 
@@ -16,10 +21,6 @@ if [ $1 == "--setup" ]; then
     cd $TC_SRC;
     [ ! -f $TC_SRC/$TC_FILE ] && wget $TC_URL_BASE/$TC_FILE;
     tar xvf $TC_FILE;
-fi
-if [ $1 == "--setup" ] || [ $1 == "--env" ]; then
-    cd $TC_SRC/*/bin
-    export PATH=$PWD:$PATH && arm-linux-gnueabihf-gcc --version
 fi
 
 cd $START_DIR

@@ -1,5 +1,6 @@
 
 help:
+	@echo -e "\e[97m" #Switch to WHITE colour
 	@echo "This Makefile allows automatic build of a complete debian based linux for the BeagleBone Black board."
 	@echo "Make targets are :"
 	@echo " help       --> Get the help of this Makefile"
@@ -8,15 +9,16 @@ help:
 	@echo " rootfs     --> Build the root file system"
 	@echo " dtb        --> Build the device tree"
 	@echo " bootloader --> Build U-Boot"
-	@echo " burn       --> Burn the compiled binaries to the SD card"
+	@echo " burn  SDCARD_DEV=/dev/sdX     --> Burn the compiled binaries to the SD card accessible via /dev/sdX"
 	@echo " all        --> Build the complete system"
 	@echo " setup_build_env --> Sets up the bash env for building binaries to run on the target system"
+	@echo -e "\e[0m" #Switch back to defaul colour
 
 toolchain:
 	./scripts/toolchain.bash --setup
 
 setup_build_env:
-	./scripts/toolchain.bash --env
+	source /home/harbio/sdk2/bbb/scripts/set_env.bash
 
 kernel:setup_build_env
 	./scripts/kernel.bash --build
@@ -27,8 +29,15 @@ bootloader:setup_build_env
 dtb:setup_build_env
 	./scripts/dtb.bash --build
 
-all:dtb kernel bootloader toolchain
+rootfs:
+	./scripts/rootfs.bash
+
+all:rootfs dtb kernel bootloader toolchain
 	echo "You can find the files to install inside images folder"
+
+burn:
+	echo "Burning the linux image to "$(SDCARD_DEV)
+	sudo ./scripts/burn.bash --wipe-all --drive $(SDCARD_DEV)
 
 test:
 	@echo "Test makefile target"

@@ -1,5 +1,9 @@
-#!/bin/sh
-
+#!/bin/bash
+#
+# (c) Copyright 2016 Oussema Harbi <oussema.elharbi@gmail.com>
+# Licensed under terms of GPLv2
+#
+#
 START_DIR=$PWD
 
 mkdir -p bootloader
