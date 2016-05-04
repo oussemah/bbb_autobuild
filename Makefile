@@ -32,7 +32,7 @@ dtb:setup_build_env
 rootfs:
 	./scripts/rootfs.bash
 
-all:rootfs dtb kernel bootloader toolchain
+all: toolchain bootloader kernel dtb rootfs
 	echo "You can find the files to install inside images folder"
 
 burn:
