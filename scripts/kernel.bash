@@ -12,6 +12,13 @@ cd kernel
 [ ! -d linux ] && git clone https://github.com/beagleboard/linux.git
 
 cd linux
+patched=`grep CONFIG_CC_STACKPROTECTOR_STRONG arch/arm/configs/bb.org_defconfig | wc -l`
+if [ $patched != "0" ]; then
+    git apply $START_DIR/scripts/0001-Removing-ONFIG_CC_STACKPROTECTOR_STRONG-option.patch
+else
+    echo "Code Already patched !"
+fi
+
 arm-linux-gnueabihf-gcc --version
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bb.org_defconfig

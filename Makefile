@@ -18,7 +18,7 @@ toolchain:
 	./scripts/toolchain.bash --setup
 
 setup_build_env:
-	source /home/harbio/sdk2/bbb/scripts/set_env.bash
+	#source /home/harbio/sdk2/bbb/scripts/set_env.bash
 
 kernel:setup_build_env
 	./scripts/kernel.bash --build
