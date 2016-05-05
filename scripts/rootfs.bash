@@ -11,6 +11,9 @@ START_DIR=$PWD
 
 mkdir -p rootfs
 cd rootfs
-wget -c $RFS_URL -O $START_DIR/images/rootfs.tar.xz
+
+if [ ! -f rootfs.tar.xz ]; then
+	wget -c $RFS_URL -O $START_DIR/images/rootfs.tar.xz
+fi
 
 cd $START_DIR

@@ -92,7 +92,7 @@ copy_uboot() {
         exit 1
     fi
 
-    if [ ! -f ${SRCDIR}/u-boot.bin ]; then
+    if [ ! -f ${SRCDIR}/u-boot.img ]; then
         echo -e "File not found: ${SRCDIR}/u-boot.bin\n"
         exit 1
     fi
@@ -122,7 +122,7 @@ copy_uboot() {
         sudo cp ${SRCDIR}/MLO /media/card/MLO
 
         echo "Copying u-boot"
-        sudo cp ${SRCDIR}/u-boot.bin /media/card/u-boot.bin
+        sudo cp ${SRCDIR}/u-boot.img /media/card/u-boot.img
 
         sudo cp -va ${SRCDIR}/uImage /media/card/
         sudo cp -va ${SRCDIR}/am335x-boneblack.dtb /media/card/

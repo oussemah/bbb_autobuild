@@ -19,7 +19,7 @@ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-
 #Move result to image folder
 mkdir -p $START_DIR/images
 cp -a MLO $START_DIR/images/
-cp -a u-boot.bin $START_DIR/images/
+cp -a u-boot.img $START_DIR/images/
 cp -a $START_DIR/scripts/uEnv.txt $START_DIR/images/
 
 cd $START_DIR
