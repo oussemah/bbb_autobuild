@@ -23,4 +23,7 @@ if [ $1 == "--setup" ]; then
     tar xvf $TC_FILE;
 fi
 
+#These 2 dependencies are necessary for uImage building
+sudo apt-get install u-boot-tools lzop
+
 cd $START_DIR

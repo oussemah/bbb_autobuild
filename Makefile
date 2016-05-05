@@ -20,7 +20,7 @@ toolchain:
 setup_build_env:
 	./scripts/set_env.bash
 
-kernel:
+kernels:
 	set -e; \
 	./scripts/set_env.bash; \
 	./scripts/kernel.bash --build
