@@ -5,7 +5,7 @@
 #
 #
 
-RFS_URL=https://www.dropbox.com/s/k93doprl261hwn2/rootfs.tar.xz?dl=0
+RFS_URL=http://s3.armhf.com/dist/basefs/debian-wheezy-7.5-armhf.com-20140603.tar.xz
 
 START_DIR=$PWD
 
