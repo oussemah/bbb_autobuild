@@ -1,4 +1,6 @@
 
+.PHONY: kernel bootloader dtb
+
 help:
 	@echo -e "\e[97m" #Switch to WHITE colour
 	@echo "This Makefile allows automatic build of a complete debian based linux for the BeagleBone Black board."
@@ -20,13 +22,13 @@ toolchain:
 setup_build_env:
 	./scripts/set_env.bash
 
-kernels:
+kernel:
 	set -e; \
 	./scripts/set_env.bash; \
 	./scripts/kernel.bash --build
 
 bootloader:
-	set -e; \
+	set -e;\
 	./scripts/set_env.bash; \
 	./scripts/bootloader.bash --build
 

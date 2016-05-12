@@ -7,26 +7,30 @@
 
 START_DIR=$PWD
 
-mkdir -p kernel
-cd kernel
-[ ! -d linux ] && git clone https://github.com/beagleboard/linux.git
-
-cd linux
-patched=`grep CONFIG_CC_STACKPROTECTOR_STRONG arch/arm/configs/bb.org_defconfig | wc -l`
-if [ $patched != "0" ]; then
-    git apply $START_DIR/scripts/0001-Removing-ONFIG_CC_STACKPROTECTOR_STRONG-option.patch
+if [ ! -d kernel ]; then
+ git clone https://github.com/beagleboard/kernel.git
+ cd kernel
+ git checkout 3.8
+ ./patch.sh
 else
-    echo "Code Already patched !"
+ cd kernel
 fi
+
+cp configs/beaglebone kernel/arch/arm/configs/beaglebone_defconfig
+
+#Precompiled power management firmware
+wget http://arago-project.org/git/projects/?p=am33x-cm3.git\;a=blob_plain\;f=bin/am335x-pm-firmware.bin\;hb=HEAD -O kernel/firmware/am335x-pm-firmware.bin
+
+cd kernel
 
 arm-linux-gnueabihf-gcc --version
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bb.org_defconfig
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- uImage LOADADDR=0x80008000 -j4
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- beaglebone_defconfig
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- uImage uImage-dtb.am335x-boneblack
 
 #Move result to image folder
 mkdir -p $START_DIR/images
-cp -a arch/arm/boot/uImage $START_DIR/images/
+cp -a arch/arm/boot/uImage-dtb.am335x-boneblack $START_DIR/images/uImage
 
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- modules -j4
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- INSTALL_MOD_PATH=$START_DIR/images/modules modules_install
